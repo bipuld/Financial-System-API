@@ -62,6 +62,8 @@ class LoginView(APIView):
             return Response({"error": "Invalid credentials."}, status=status.HTTP_401_UNAUTHORIZED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+
 class ProfileView(APIView):
     "View for getting and updating user profile"
     permission_classes = [IsAuthenticated]
@@ -75,8 +77,27 @@ class ProfileView(APIView):
     )
     def get(self, request):
         """Get the current user's profile"""
+        
         serializer = ProfileSerializer(request.user)
         return Response(serializer.data)
+
+    @swagger_auto_schema(
+        operation_description="Update user profile",
+        request_body=ProfileSerializer,
+        responses={
+            200: openapi.Response('Profile updated successfully.'),
+            400: openapi.Response('Bad Request.'),
+            401: openapi.Response('Unauthorized.'),
+        }
+    )
+    def put(self, request):
+        """Update the current user's profile"""
+        serializer = ProfileSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Profile updated successfully."})
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class LogoutApiView(APIView):
     """
