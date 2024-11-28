@@ -1,0 +1,164 @@
+/* Header */
+#header {
+    background: linear-gradient(135deg, #2c3e50, #4b79a1);
+    color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+    border-bottom: 4px solid #e74c3c;
+    text-align: center;
+    font-size: 0.9em; /* Smaller font size */
+}
+
+/* Header Links */
+#header a:link,
+#header a:visited {
+    color: #f1c40f;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.4s ease, transform 0.3s ease;
+    font-size: 1.0em; /* Smaller link text */
+}
+
+#header a:hover {
+    color: #e74c3c;
+    transform: scale(1.1);
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* Breadcrumbs */
+div.breadcrumbs {
+    background: linear-gradient(135deg, #4b79a1, #2c3e50);
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    font-size: 0.85em; /* Reduced font size */
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Module Headers */
+.module h2,
+.module caption,
+.inline-group h2 {
+    background: linear-gradient(135deg, #34495e, #4b79a1);
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 1.2em; /* Slightly smaller text */
+    border-bottom: 3px solid #e74c3c;
+    margin-bottom: 15px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Buttons */
+.button,
+input[type=submit],
+input[type=button],
+.submit-row input,
+a.button {
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+    color: #ffffff;
+    padding: 10px 18px; /* Slightly reduced padding */
+    border: none;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.85em; /* Smaller button text */
+    border-radius: 8px;
+    transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.button:active,
+input[type=submit]:active,
+input[type=button]:active,
+.button:focus,
+input[type=submit]:focus,
+input[type=button]:focus,
+.button:hover,
+input[type=submit]:hover,
+input[type=button]:hover {
+    background: linear-gradient(135deg, #16a085, #1abc9c);
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px) scale(1.05);
+}
+
+/* Default Buttons */
+.button.default,
+input[type=submit].default,
+.submit-row input.default {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: #ecf0f1;
+    padding: 10px 18px;
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.85em; /* Compact text */
+    border-radius: 8px;
+    transition: background 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
+
+.button.default:active,
+input[type=submit].default:active,
+.button.default:focus,
+input[type=submit].default:focus,
+.button.default:hover,
+input[type=submit].default:hover {
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+    transform: translateY(-2px);
+}
+
+/* Links */
+a:link,
+a:visited {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    font-size: 0.85em; /* Smaller links */
+}
+
+a:hover {
+    color: #e74c3c;
+    text-decoration: underline;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Additional Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.example-fade-in {
+    animation: fadeIn 1.2s ease-in-out;
+    animation-fill-mode: both;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 600px) {
+    #header,
+    .breadcrumbs,
+    .module h2 {
+        padding: 15px;
+    }
+    .button,
+    input[type=submit],
+    input[type=button] {
+        width: 100%;
+        padding: 12px; /* Comfortable for touch devices */
+        font-size: 20px; /* Even smaller text for mobile */
+    }
+    #header {
+        text-align: left;
+    }
+}

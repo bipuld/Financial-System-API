@@ -6,6 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
+activate.bat
+debug.log
 # Distribution / packaging
 .Python
 build/
