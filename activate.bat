@@ -1,0 +1,1 @@
+E:\coding\python\django\Simple Financial System\venv\Scripts\activate.bat
