@@ -4,7 +4,6 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
-
 from .models import CustomUser
 from .serializers import RegisterSerializer, LoginSerializer, ProfileSerializer
 from django.contrib.auth import logout
@@ -38,6 +37,7 @@ class LoginView(APIView):
     "API endpoint for user login. This allow us to Login the user."    
     permission_classes = [AllowAny]
 
+
     @swagger_auto_schema(
         operation_description="Login a user and get JWT tokens",
         request_body=LoginSerializer,
@@ -63,10 +63,10 @@ class LoginView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class ProfileView(APIView):
     "View for getting and updating user profile"
     permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]  
 
     @swagger_auto_schema(
         operation_description="Get user profile",

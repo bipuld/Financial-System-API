@@ -8,16 +8,15 @@ class Income(models.Model):
     source_name = models.CharField(max_length=255)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     date_received = models.DateField(default=timezone.now)
-
-    
     STATUS_CHOICES = [
         ('Pending', 'Pending'),
         ('Received', 'Received'),
     ]
     status = models.CharField(max_length=10, choices=STATUS_CHOICES,default='Pending')
     notes = models.TextField(blank=True, null=True)
-
+    
     def clean(self):
+        "this validation that let the amount to be positive"
         if self.amount < 0:
             raise ValidationError("Amount cannot be negative.")
 

@@ -8,7 +8,7 @@
     font-family: 'Poppins', sans-serif;
     border-bottom: 4px solid #e74c3c;
     text-align: center;
-    font-size: 0.9em; /* Smaller font size */
+    font-size: 1.9em;
 }
 
 /* Header Links */
@@ -18,7 +18,7 @@
     text-decoration: none;
     font-weight: bold;
     transition: color 0.4s ease, transform 0.3s ease;
-    font-size: 1.0em; /* Smaller link text */
+    font-size: 1.4em; /* Smaller link text */
 }
 
 #header a:hover {
@@ -34,7 +34,7 @@ div.breadcrumbs {
     padding: 15px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    font-size: 0.85em; /* Reduced font size */
+    font-size: 1.4em; /* Reduced font size */
     font-family: 'Roboto', sans-serif;
 }
 
@@ -46,7 +46,7 @@ div.breadcrumbs {
     color: #ffffff;
     padding: 15px;
     border-radius: 12px;
-    font-size: 1.2em; /* Slightly smaller text */
+    font-size: 1.6em; /* Slightly smaller text */
     border-bottom: 3px solid #e74c3c;
     margin-bottom: 15px;
     font-family: 'Poppins', sans-serif;
@@ -66,7 +66,7 @@ a.button {
     font-family: 'Poppins', sans-serif;
     text-decoration: none;
     font-weight: bold;
-    font-size: 0.85em; /* Smaller button text */
+    font-size: 1.2em; /* Smaller button text */
     border-radius: 8px;
     transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
@@ -96,7 +96,7 @@ input[type=submit].default,
     font-family: 'Roboto', sans-serif;
     text-decoration: none;
     font-weight: bold;
-    font-size: 0.85em; /* Compact text */
+    font-size: 1.2em; /* Compact text */
     border-radius: 8px;
     transition: background 0.3s ease, transform 0.3s ease, color 0.3s ease;
 }
@@ -118,7 +118,7 @@ a:visited {
     text-decoration: none;
     font-weight: bold;
     transition: color 0.3s ease, text-shadow 0.3s ease;
-    font-size: 0.85em; /* Smaller links */
+    font-size: 1.0em; /* Smaller links */
 }
 
 a:hover {
@@ -156,7 +156,7 @@ a:hover {
     input[type=button] {
         width: 100%;
         padding: 12px; /* Comfortable for touch devices */
-        font-size: 20px; /* Even smaller text for mobile */
+        font-size: 1.24em; /* Even smaller text for mobile */
     }
     #header {
         text-align: left;
