@@ -9,6 +9,7 @@ from drf_yasg import openapi
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from finance.serializers import *
+from rest_framework.pagination import PageNumberPagination
 
 
 logger = logging.getLogger('django')
@@ -63,6 +64,20 @@ class IncomeManagment(APIView):
 
     @swagger_auto_schema(
         operation_description="Getting Income",
+        manual_parameters=[
+                openapi.Parameter(
+                    'status', openapi.IN_QUERY, description="Filter by income status (e.g., 'Pending' or 'Received' )", type=openapi.TYPE_STRING
+                ),
+                openapi.Parameter(
+                    'date_received', openapi.IN_QUERY, description="Filter by date received (YYYY-MM-DD) (e.g., '2024-10-15')", type=openapi.TYPE_STRING
+                ),
+                openapi.Parameter(
+                    'source_name', openapi.IN_QUERY, description="Filter by source of income (e.g., 'Salary' or 'Trading' )", type=openapi.TYPE_STRING
+                ),
+                openapi.Parameter(
+                    'sort', openapi.IN_QUERY, description="Sort results by a field (e.g., 'amount' or '-date_received')", type=openapi.TYPE_STRING
+                ),
+            ],
         responses={
             SUCCESS_RESPONSE_CODE: openapi.Response('Income retrieved successfully.'),
             UNSUCCESS_RESPONSE_CODE: openapi.Response('Bad Request.'),
@@ -70,16 +85,35 @@ class IncomeManagment(APIView):
     )
 
     def get(self, request):
+        # /api/finance/income/?status=Received&source_name=Salary&sort=-date_received
         """Get the current user's income put the current user access token in headers as - Bearer token"""
         try:
+            # get the filter data for the current income user and query filter search 
             user=request.user
+            status_filter = request.query_params.get('status')
+            date_received_filter = request.query_params.get('date_received')
+            source_name_filter = request.query_params.get('source_name')
+            # sorting parameters
+            sort_by = request.query_params.get('sort',None)
             incomes = Income.objects.filter(user=user)
-            serializers=IncomeSerizlier(incomes, many=True)
+            if status_filter:
+                incomes = incomes.filter(status=status_filter)
+            if date_received_filter:
+                incomes = incomes.filter(date_received=date_received_filter)
+            if source_name_filter:
+                incomes = incomes.filter(source_name__icontains=source_name_filter)
+            if sort_by:
+                incomes = incomes.order_by(sort_by)
+            paginator = PageNumberPagination()
+            paginator.page_size = 10
+            result_page = paginator.paginate_queryset(incomes, request)
+            serializers=IncomeSerizlier(result_page, many=True)
             response = {
                 RESPONSE_CODE_KEY: SUCCESS_RESPONSE_CODE,
                 RESPONSE_MESSAGE_KEY: "Income retrieved successfully.",
                 RESULT_DATA: serializers.data
             }
+            # print(Income.objects.filter(user=user).order_by(sort_by),sort_by)
             logger.info("Income retrieved successfully for user: %s", request.user)
             return Response(response, status=status.HTTP_200_OK)
         except Exception as e:
@@ -95,6 +129,8 @@ class IncomeManagment(APIView):
     @swagger_auto_schema(
         operation_description="Updating Income",
         request_body=IncomeSerizlier,
+        required=['income_id'],
+
         responses={
             SUCCESS_RESPONSE_CODE: openapi.Response('Income updated successfully.'),
             UNSUCCESS_RESPONSE_CODE: openapi.Response('Bad Request.'),
@@ -144,7 +180,8 @@ class IncomeManagment(APIView):
         properties={
             'income_id': openapi.Schema(type=openapi.TYPE_INTEGER, description='The ID of the income record to be deleted')
         },
-        required=['income_id']
+        required=['income_id'],
+        operation_description="Deleting Income",
     )
 
     @swagger_auto_schema(request_body=delete_body) 
