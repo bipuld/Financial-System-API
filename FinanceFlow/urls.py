@@ -9,21 +9,20 @@ from rest_framework import permissions
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Your API",
+        title="FianceFlow API",
         default_version='v1',
         description="API documentation",
         contact=openapi.Contact(email="contact@gmail.com"),
-        license=openapi.License(name="BSD License"),
+        license=openapi.License(name="XYZ License"),
     ),
     public=True,
     permission_classes=(AllowAny,), 
 )
 
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('account/', include('core.urls')), 
-    # Swagger URLS
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('api/accounts/', include('core.urls')), 
+    path('api/finance/', include('finance.urls')),
+    path('swagger/', schema_view.with_ui('swagger',cache_timeout=0), name='schema-swagger-ui'),
 ]

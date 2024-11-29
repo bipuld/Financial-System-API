@@ -76,7 +76,7 @@ class ProfileView(APIView):
         }
     )
     def get(self, request):
-        """Get the current user's profile"""
+        """Get the current user's profile and put the current user access token in headers as Bearer token"""
         
         serializer = ProfileSerializer(request.user)
         return Response(serializer.data)
@@ -91,7 +91,7 @@ class ProfileView(APIView):
         }
     )
     def put(self, request):
-        """Update the current user's profile"""
+        """Update the current user's profile put the current user access token in headers as Bearer token"""
         serializer = ProfileSerializer(request.user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
@@ -101,7 +101,7 @@ class ProfileView(APIView):
 
 class LogoutApiView(APIView):
     """
-    API endpoint for user logout. This logs out the user and revokes the refresh token.
+    API endpoint for user logout. Put the current user access token in headers as Bearer token and This logs out the user".
     """
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]  # JWT Authentication to the view
