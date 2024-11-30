@@ -24,9 +24,6 @@ http://localhost:8000/api/finance/income/?status=Received&date_received=2024-11-
 http://localhost:8000/api/finance/income/?page=1
 http://localhost:8000/api/finance/income/?sort=amount
 
-
-
-
 Expenses
 
 http://localhost:8000/api/finance/expense/?page=2
@@ -34,3 +31,11 @@ http://localhost:8000/api/finance/expense/?status=Paid&due_date=2024-11-3
 http://localhost:8000/api/finance/expense/?status=Paid&due_date=2024-11-30&category=Water
 http://localhost:8000/api/finance/expense/?sort=amount
 http://localhost:8000/api/finance/expense/?page=2&sort=due_date
+
+
+
+Loan
+http://localhost:8000/api/finance/loan/?page=2
+http://localhost:8000/api/finance/loan/?page=2&status=Active
+http://localhost:8000/api/finance/loan/?status=Paid&laon_name=Car%20Loan
+http://localhost:8000/api/finance/loan/?rem_amnt_gte=26000.00&rem_amnt_lte=5000000.00

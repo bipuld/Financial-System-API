@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 Externam_APPS = [
     'core',
     'finance',
+    'Report',
     'rangefilter',
 ]
 

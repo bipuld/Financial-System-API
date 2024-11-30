@@ -70,7 +70,7 @@ class ExpensesView(APIView):
                 'due_date', openapi.IN_QUERY, description="Filter by Due date (YYYY-MM-DD) (e.g., '2024-10-15')", type=openapi.TYPE_STRING
             ),
             openapi.Parameter(
-                'category', openapi.IN_QUERY, description="Filter by category of expenses (e.g., 'Bill' or 'Shopping')", type=openapi.TYPE_STRING
+                'category', openapi.IN_QUERY, description="Filter by category of expenses (e.g., 'Bill')", type=openapi.TYPE_STRING
             ),
             openapi.Parameter(
                 'sort', openapi.IN_QUERY, description="Sort results by a field (e.g., 'amount' or '-due_date')", type=openapi.TYPE_STRING
