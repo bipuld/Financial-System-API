@@ -1,10 +1,11 @@
 from rest_framework import serializers
-from finance.models import Income
+from finance.models import Expense
 
-class IncomeSerizlier(serializers.ModelSerializer):
+
+class ExpensesSerializers(serializers.ModelSerializer):
     class Meta:
-        model = Income
-        fields = ['id','source_name','amount','date_received','status','notes']
+        model = Expense
+        fields = ['id','category','amount','due_date','status','notes']
 
     def validate_amount(self, value):
         if value < 0:

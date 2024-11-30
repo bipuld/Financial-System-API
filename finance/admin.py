@@ -1,36 +1,39 @@
 import csv
 from django.contrib import admin
-from .models import Income
+from .models import Income,Expense
 from django.utils.html import format_html
 from rangefilter.filters import DateRangeFilter
 from django.http import HttpResponse
 @admin.register(Income)
 class IncomeAdmin(admin.ModelAdmin):
-    list_display = ('user', 'source_name', 'amount', 'date_received', 'status', 'notes_snippet', 'custom_actions')
+    list_display = ('user', 'source_name', 'amount', 'date_received', 'status', 'notes_text', 'custom_actions')
     search_fields = ('user__email', 'source_name', 'status', 'notes')    
     list_filter = (('date_received', DateRangeFilter), 'status')
 
     fields = ('user', 'source_name', 'amount', 'date_received', 'status', 'notes')
-    actions = ['mark_as_received', 'export_to_csv']
+    actions = ['mark_received', 'export_to_csv']
     
-    def notes_snippet(self, obj):
+    def notes_text(self, obj):
         return f"{obj.notes[:50]}..." if obj.notes else "No Notes"
-    notes_snippet.short_description = "Notes"
+    notes_text.short_description = "Notes"
 
     def custom_actions(self, obj):
         """Action to the change or edit the user data."""
         return format_html(
-            '<a class="button" style="background:black;" href="{}">View</a> <a class="button"  style="background:black;" href="{}">Edit</a>',
+             '<a class="button" style="background:black; margin-right: 10px; padding: 5px 10px; display: inline-block;" href="{}">View</a>'
+            '<a class="button" style="background:black; padding: 5px 10px; display: inline-block;" href="{}">Edit</a>',
             f"/admin/finance/income/{obj.id}/change/",
             f"/admin/finance/income/{obj.id}/",
         )
     custom_actions.short_description = "Actions"
 
-    def mark_as_received(self, request, queryset):
+
+
+    def mark_received(self, request, queryset):
         """Admin action to mark 'pending 'incomes as 'Received'."""
         updated = queryset.update(status='Received')
         self.message_user(request, f"{updated} incomes marked as Received.")
-    mark_as_received.short_description = "Mark selected incomes as Received"
+    mark_received.short_description = "Mark selected incomes as Received"
 
     def export_to_csv(self, request, queryset):
         """Export selected records to CSV."""
@@ -42,3 +45,44 @@ class IncomeAdmin(admin.ModelAdmin):
             writer.writerow([obj.user, obj.source_name, obj.amount, obj.date_received, obj.status, obj.notes])
         return response
     export_to_csv.short_description = "Export selected incomes to CSV"
+
+
+@admin.register(Expense)
+class ExpenseAdmin(admin.ModelAdmin):
+    list_display=('user', 'category', 'amount', 'due_date', 'status', 'notes_text', 'custom_actions')
+    search_fields = ('user__email', 'category', 'status', 'notes')
+    list_filter = (('due_date', DateRangeFilter), 'status')
+    fields = ('user', 'category', 'amount', 'due_date', 'status', 'notes')
+    actions = ['mark_paid', 'export_to_csv']
+
+    def notes_text(self, obj):
+        return f"{obj.notes[:50]}..." if obj.notes else "No Notes"
+    
+    def custom_actions(self, obj):
+        """Action to the change or edit the user data."""
+        return format_html(
+             '<a class="button" style="background:black; margin-right: 10px; padding: 5px 10px; display: inline-block;" href="{}">View</a>'
+            '<a class="button" style="background:black; padding: 5px 10px; display: inline-block;" href="{}">Edit</a>',
+            f"/admin/finance/expense/{obj.id}/change/",
+            f"/admin/finance/expense/{obj.id}/",
+        )
+    custom_actions.short_description = "Actions"
+
+    
+    def mark_paid(self, request, queryset):
+        """Admin action to mark 'Pending' Expenses as 'Paid'."""
+        updated = queryset.update(status='Paid')
+        self.message_user(request, f"{updated} Expenses marked as Paid.")
+    mark_paid.short_description = "Mark selected Expenses as paid"
+
+    
+    def export_to_csv(self, request, queryset):
+        """Export selected records to CSV."""
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="Expenses_record.csv"'
+        writer = csv.writer(response)
+        writer.writerow(['User', 'Category', 'Amount', 'Due Date', 'Status', 'Notes'])
+        for obj in queryset:
+            writer.writerow([obj.user, obj.category, obj.amount, obj.due_date, obj.status, obj.notes])
+        return response
+    export_to_csv.short_description = "Export selected Expenses to CSV"
