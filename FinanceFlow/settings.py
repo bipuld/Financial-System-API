@@ -59,7 +59,12 @@ ROOT_URLCONF = 'FinanceFlow.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        # 'DIRS': ["templates"],
+        'DIRS': [
+            BASE_DIR / 'template',  # Assuming templates are in a 'templates' directory at the project root
+
+        ],
+        # 'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

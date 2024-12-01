@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income vs. Expense Trend</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2>Income vs. Expense Trend</h2>
+    <canvas id="trendChart"></canvas>
+    <p>Trends Data: {{ trends|safe }}</p>
+
+
+    <script>
+        // Ensure the trends data is safely passed into the JavaScript as an object
+        const trends = {{ trends|safe }};
+        
+        // Map the trends data into separate arrays for dates, income, and expense
+        const labels = trends.map(item => item.date);
+        const incomeData = trends.map(item => item.income);
+        const expenseData = trends.map(item => item.expense);
+
+        // Get the canvas element context
+        const ctx = document.getElementById('trendChart').getContext('2d');
+        
+        // Create the chart
+        new Chart(ctx, {
+            type: 'line', // Line chart
+            data: {
+                labels: labels,  // Dates for the X-axis
+                datasets: [
+                    {
+                        label: 'Income',
+                        data: incomeData,  // Income data for the Y-axis
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        fill: false,  // No fill under the line
+                    },
+                    {
+                        label: 'Expense',
+                        data: expenseData,  // Expense data for the Y-axis
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        fill: false,  // No fill under the line
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Income vs Expense Trends',  // Title for the chart
+                    },
+                },
+            },
+        });
+    </script>
+</body>
+</html>

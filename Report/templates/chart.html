@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Income vs. Expense Trend</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .download-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Income vs. Expense Trend</h2>
+        <div class="chart-container">
+            <canvas id="trendChart"></canvas>
+        </div>
+        {% comment %} <a id="downloadChart" class="download-btn">Download Chart</a> {% endcomment %}
+    </div>
+
+    <script>
+{% comment %} 
+        const dates = ['2024-11-01', '2024-11-25', '2024-11-29', '2024-11-30'];
+        const incomes = [0.0, 0.0, 850000.0, 245454.0];
+        const expenses = [0.0, 850.0, 0.0, 15000.0];  {% endcomment %}
+
+
+        const dates ={{ dates|safe }};
+        const incomes = {{ incomes }};
+        const expenses = {{ expenses }}; 
+
+        console.log("Dates:", dates);
+        console.log("Incomes:", incomes);
+        console.log("Expenses:", expenses);
+
+        const ctx = document.getElementById('trendChart').getContext('2d');
+
+        // Create the chart
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [
+                    {
+                        label: 'Income',
+                        data: incomes,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                    },
+                    {
+                        label: 'Expense',
+                        data: expenses,
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderWidth: 2,
+                        tension: 0.4,
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Income vs Expense Trends',
+                        font: {
+                            size: 18,
+                        },
+                    },
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Dates',
+                        },
+                        grid: {
+                            display: false,
+                        },
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Amount (in currency)',
+                        },
+                        grid: {
+                            color: '#ddd',
+                        },
+                    },
+                },
+            },
+        });
+
+        {% comment %} const downloadBtn = document.getElementById('downloadChart');
+        downloadBtn.addEventListener('click', function () {
+            const link = document.createElement('a');
+            link.download = 'income_vs_expense_chart.png';
+            link.href = document.getElementById('trendChart').toDataURL();
+            link.click();
+        }); {% endcomment %}
+    </script>
+</body>
+</html>
