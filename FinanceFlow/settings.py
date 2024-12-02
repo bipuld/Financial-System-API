@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-j)%3i1*64*m@5tlx*)q7%y%#!1umz(-u%!0xs0fq!!+!m)f^x%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -55,16 +55,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'FinanceFlow.urls'
+AUTH_USER_MODEL = 'core.CustomUser'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # 'DIRS': ["templates"],
-        'DIRS': [
-            BASE_DIR / 'template',  # Assuming templates are in a 'templates' directory at the project root
-
-        ],
-        # 'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -92,10 +88,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'core.CustomUser'
 
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -148,9 +141,9 @@ SWAGGER_SETTINGS = {
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # For production, when you run 'collectstatic'
+STATIC_ROOT = BASE_DIR / 'staticfiles' 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',  # Create a 'static' folder in your project directory
+    BASE_DIR / 'static',  
 ]
 
 # media file settings

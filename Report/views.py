@@ -158,29 +158,19 @@ class IncomeExpenseTrendView(APIView):
             })
 
             current_date += timedelta(days=1)
-
-        # Return HTML response
+        print(report,"report")
         if 'text/html' in request.headers.get('Accept', ''):
-            # Simulate trends data (replace this with your actual query logic)
-            trends = [
-                {'date': '2024-11-01', 'income': Decimal('0.0'), 'expense': Decimal('0.0')},
-                {'date': '2024-11-25', 'income': Decimal('0.0'), 'expense': Decimal('850')},
-                {'date': '2024-11-29', 'income': Decimal('850000'), 'expense': Decimal('0.0')},
-                {'date': '2024-11-30', 'income': Decimal('245454'), 'expense': Decimal('15000')},
-            ]
-            for item in trends:
+            for item in report:
                 item['income'] = float(item['income'])
                 item['expense'] = float(item['expense'])
 
-            return self.render_trend_view(request, start_date, end_date, trends)
+            return self.render_trend_view(request, start_date, end_date, report)
 
-        # Return JSON response
         data = {
             "start_date": start_date.strftime("%Y-%m-%d"),
             "end_date": end_date.strftime("%Y-%m-%d"),
             "trends": report,
         }
-        print(report,"the data are")
         return Response(data, status=200)
 
     def render_trend_view(self, request, start_date, end_date, report):
@@ -188,9 +178,9 @@ class IncomeExpenseTrendView(APIView):
             dates = [entry['date'] for entry in report]
             incomes = [entry['income'] for entry in report]
             expenses = [entry['expense'] for entry in report]
-            print(incomes,"incomes")
-            print(expenses,"expenses")
-            print(dates,"dates")
+            # print(incomes,"incomes")
+            # print(expenses,"expenses")
+            # print(dates,"dates")
             return render(request, 'chart.html', {
                 "start_date": start_date.strftime("%Y-%m-%d"),
                 "end_date": end_date.strftime("%Y-%m-%d"),

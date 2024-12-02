@@ -113,7 +113,7 @@ class IncomeManagment(APIView):
             paginator.page_size = 2  # Items per page
             paginator.page_size_query_param = 'page_size'  # Allows clients to control page size via 'page_size' parameter
             paginator.page_query_param = 'page'  # The parameter name for pagination (defaults to 'page')
-            paginator.request = request  # Required for pagination metadata
+            paginator.request = request 
 
             # Paginate the query 
             result_page = paginator.paginate_queryset(incomes, request)
