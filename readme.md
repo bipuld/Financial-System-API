@@ -1,7 +1,5 @@
-## Project Overview - Attendance System  (Hajiri)
-The Financial System is a web-based  API  create in Djnago — a high-level Python Web framework that encourages rapid development and clean, pragmatic design.
-
-
+## Project Overview - Financial System  
+The Financial System is a web-based API create in Djnago — a high-level Python Web framework that encourages rapid development and clean, pragmatic design.
 ## Tech Stack 
 Backend: Django
 API: Django REST Framework
