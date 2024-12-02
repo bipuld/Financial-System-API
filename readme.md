@@ -38,6 +38,23 @@ Filtering the data according to the specific date range and list it with all ava
 - A chartjs to visualize attendance trends.
 - Chartjs help that trend report in a graph as per user requiremnts
 
+
+# Enhanced Admin Panel
+The admin panel has been upgraded to include additional customization and features for improved usability. Key enhancements include:
+Export to CSV: Easily export data in CSV format for reporting or analysis.
+Advanced Features: Additional functionalities are integrated to streamline system management and improve efficiency.
+
+## Note
+Using Access Token in Swagger UI
+Authorize in the top-right corner.
+Enter the following:
+Name: Authorization
+In: header
+Value: Bearer <your-access-token>
+Authorize to enable API access.
+
+
+
 ## Setup and Installation
 
 ### Prerequisites
