@@ -94,7 +94,7 @@ and see all that data
 - **Token Verify:**`POST account/token/verify/` - Verify the validity of a JWT access token.
 
 ### Documentation
-- **Swagger UI:** `GET /swagger/` - Access API documentation.
+- **Swagger UI:** `GET /` - Access API documentation.
 
 ### Finance (Incomes,Expenses,Report)
 
