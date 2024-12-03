@@ -10,13 +10,14 @@ from Report import views as report_views
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="FianceFlow API",
+        title="FinanceFlow API",
         default_version='v1',
-        description="API documentation",
-        contact=openapi.Contact(email="contact@gmail.com"),
+        description="API documentation for FinanceFlow",
+        contact=openapi.Contact(email="bipuldawadi14@gmail.com"),
         license=openapi.License(name="XYZ License"),
     ),
     public=True,
+    # url='https://bipuld.pythonanywhere.com',
     permission_classes=(AllowAny,), 
 )
 
@@ -27,7 +28,7 @@ urlpatterns = [
     path('api/finance/', include('finance.urls')),
     path('api/summary/', include('Report.urls')),
     # path('chart/',report_views.TrendViews, name='income_expenses'),
-    path('swagger/', schema_view.with_ui('swagger',cache_timeout=0), name='schema-swagger-ui'),
+    path('', schema_view.with_ui('swagger',cache_timeout=0), name='schema-swagger-ui'),
 ]
 
 
