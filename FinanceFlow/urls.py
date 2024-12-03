@@ -10,14 +10,13 @@ from Report import views as report_views
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="FinanceFlow API",
+        title="FianceFlow API",
         default_version='v1',
-        description="API documentation for FinanceFlow",
-        contact=openapi.Contact(email="bipuldawadi14@gmail.com"),
+        description="API documentation",
+        contact=openapi.Contact(email="contact@gmail.com"),
         license=openapi.License(name="XYZ License"),
     ),
     public=True,
-    # url='https://bipuld.pythonanywhere.com',
     permission_classes=(AllowAny,), 
 )
 
