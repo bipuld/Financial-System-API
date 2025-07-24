@@ -1,19 +1,3 @@
-#!/bin/bash
-
-# Build the project
-echo "Creating Build Directory..."
-
-# Install requirements
-echo "Installing requirements..."
+# build_files.sh
 pip install -r requirements.txt
-
-# Verify Django installation
-echo "Verifying Django installation..."
-python -c "import django; print('Django version:', django.get_version())"
-
-echo "Make Migration..."
-python manage.py makemigrations --noinput
-python manage.py migrate --noinput
-
-echo "Collect Static..."
-python manage.py collectstatic --noinput --clear
+python3.9 manage.py collectstatic
