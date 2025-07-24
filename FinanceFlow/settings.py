@@ -10,12 +10,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-j)%3i1*64*m@5tlx*)q7%y%#!1umz(-u%!0xs0fq!!+!m)f^x%'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-j)%3i1*64*m@5tlx*)q7%y%#!1umz(-u%!0xs0fq!!+!m)f^x%')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['*']
+# Parse ALLOWED_HOSTS from environment variable
+ALLOWED_HOSTS_ENV = os.getenv('ALLOWED_HOSTS', '*')
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS_ENV.split(',') if host.strip()]
 
 
 # Application definition
@@ -28,6 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    # Third party apps
+    'corsheaders',
     'rest_framework_swagger',
     'drf_yasg',
     'rest_framework',
@@ -45,7 +49,9 @@ Externam_APPS = [
 INSTALLED_APPS.extend(Externam_APPS)
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -81,12 +87,26 @@ WSGI_APPLICATION = 'FinanceFlow.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Use PostgreSQL for production, SQLite for local development
+if os.getenv('DB_NAME'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASSWORD'),
+            'HOST': os.getenv('DB_HOST'),
+            'PORT': os.getenv('DB_PORT', '5432'),
+        }
     }
-}
+else:
+    # Fallback to SQLite for local development
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 
@@ -122,11 +142,11 @@ REST_FRAMEWORK = {
 
 # Configuration for Simple JWT tokens
 SIMPLE_JWT = {
-    # Lifetime of access tokens
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    # Lifetime of access tokens (default: 60 minutes)
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=int(os.getenv('ACCESS_TOKEN_LIFETIME_MINUTES', 60))),
 
-    # Lifetime of refresh tokens
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    # Lifetime of refresh tokens (default: 1440 minutes = 24 hours)
+    'REFRESH_TOKEN_LIFETIME': timedelta(minutes=int(os.getenv('REFRESH_TOKEN_LIFETIME_MINUTES', 1440))),
 }
 
 SWAGGER_SETTINGS = {
@@ -139,15 +159,55 @@ SWAGGER_SETTINGS = {
     },
 }
 
+# CORS Settings for API access
+CORS_ALLOW_ALL_ORIGINS = True  # Only for development
+CORS_ALLOW_CREDENTIALS = True
+
+# For production, use specific origins:
+# CORS_ALLOWED_ORIGINS = [
+#     "https://yourdomain.com",
+#     "https://www.yourdomain.com",
+# ]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+# Security Settings for Production
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+
+# HTTPS Settings (uncomment for production with HTTPS)
+# SECURE_SSL_REDIRECT = not DEBUG
+# SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+
+# CSRF Settings
+CSRF_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_SECURE = not DEBUG
+
 
 
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles' 
+STATIC_ROOT = BASE_DIR / 'staticfiles_build' / 'static'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',  
 ]
+
+# WhiteNoise configuration for static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # media file settings
 MEDIA_URL = '/media/'

@@ -1,0 +1,12 @@
+.vercel
+.env
+.env.production
+.venv
+__pycache__/
+*.pyc
+.DS_Store
+node_modules/
+.git/
+staticfiles_build/
+db.sqlite3
+debug.log
