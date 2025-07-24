@@ -3,26 +3,18 @@
   "builds": [
     {
       "src": "FinanceFlow/wsgi.py",
-      "use": "@vercel/python",
-      "config": {"maxLambdaSize": "15mb", "runtime": "python3.x"}
-    },
-    {
-      "src": "build_files.sh",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "staticfiles"
-      }
+      "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
-      "dest": "FinanceFlow/wsgi.py"
-    },
-    {
       "src": "/static/(.*)",
       "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "FinanceFlow/wsgi.py"
     }
-  ]
+  ],
+  "postinstall": "python manage.py migrate && python manage.py collectstatic --noinput"
 }
-
