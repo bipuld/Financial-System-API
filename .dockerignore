@@ -1,0 +1,71 @@
+# Git
+.git
+.gitignore
+
+# Docker
+.docker
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git
+.mypy_cache
+.pytest_cache
+.hypothesis
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Project specific
+debug.log
+db.sqlite3
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Media files (if you have uploads)
+media/
+
+# Static files (will be collected during build)
+staticfiles/
+
+# Documentation
+*.md
+README.md
+LICENSE
+
+# Vercel
+.vercel
+vercel.json
+
+# Build files
+build_files.sh
+activate.bat
