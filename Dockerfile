@@ -21,6 +21,7 @@ COPY . /app/
 
 RUN mkdir -p /app/staticfiles
 RUN python manage.py collectstatic --noinput
+RUN python manage.py migrate
 
 EXPOSE $PORT
-CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "FinanceFlow.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "FinanceFlow.wsgi:application"]
