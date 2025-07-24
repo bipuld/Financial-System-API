@@ -34,15 +34,7 @@ services:
     runtime: postgresql
     plan: starter
     region: oregon
-    databaseName: financeflow_db
-    databaseUser: financeflow_user
-    envVars:
-      - key: DB_NAME
-        value: smartnotify
-      - key: DB_USER
-        value: smartnotify_user
-      - key: DB_PASSWORD
-        value: 7eh2YmGGeJUM1rhIhJsdDNPQLzOhlsYG
+
 
 
 # Environment Groups (for shared environment variables)
